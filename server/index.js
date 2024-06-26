@@ -1,10 +1,13 @@
 const express = require("express");
 const { expressjwt } = require("express-jwt");
 const jwt = require("jsonwebtoken");
+const cors = require('cors');
 const bodyParser = require("body-parser");
 
 const app = express();
 const port = 3001;
+// 使用 cors 中间件
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
