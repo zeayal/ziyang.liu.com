@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './LoginPage.module.css';
+import http from '../utils/http';
 
 
 export default function Home() {
@@ -18,32 +19,50 @@ export default function Home() {
         // 验证成功获取用户信息 + token  
         // 提示用户登陆成功 跳转 home 页面
         // 如果没有登陆成功 ，报错给用户
+        // try {
+        //     const response = await fetch('http://localhost:3001/api/v1/login', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ username, password }),
+        //     })
+
+        //     const res = await response.json();
+
+        //     if (res.status === 'ok') {
+        //         // 登录成功
+        //         console.log('Login successful!')
+        //         // 存储token
+        //         localStorage.setItem('token', res.data.token)
+        //         // 跳转到post页面
+        //         router.push('/dashbord');
+
+        //     } else {
+        //         // 登录失败
+        //         alert(res.msg)
+        //     }
+        // } catch (error) {
+        //     console.error('An error occurred:', error);
+
+        // }
+
+        // 2.使用封装的axios
         try {
-            const response = await fetch('http://localhost:3001/api/v1/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-            })
+            const res = await http.post('/api/v1/login', { username, password });
+            console.log('res', res);
 
-            const res = await response.json();
-
+            // 判断是否登录成功
             if (res.status === 'ok') {
-                // 登录成功
-                console.log('Login successful!')
-                // 存储token
-                localStorage.setItem('token', res.data.token)
-                // 跳转到post页面
+                // 存储token, 跳转页面
+                localStorage.setItem('token', res.data.token);
                 router.push('/dashbord');
-
             } else {
                 // 登录失败
-                alert(res.msg)
+                alert(res.msg);
             }
         } catch (error) {
-            console.error('An error occurred:', error);
-
+            console.error(error);
         }
     }
 
