@@ -7,9 +7,12 @@ import "./db.js";
 import postRouter from "./router/post.router.js";
 import authRouter from './router/auth.router.js'
 import responseHandler from "./middleware/responseHandler.js";
+import cors from 'cors';
 
 const app = express();
 const port = 3001;
+// 使用 cors 中间件
+app.use(cors());
 
 app.use(responseHandler);
 app.use(bodyParser.json());
