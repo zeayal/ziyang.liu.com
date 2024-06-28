@@ -47,16 +47,16 @@ export default function Home() {
 
         // }
 
-        // 2.使用封装的axios
+        // 2.使用封装的axios调用接口验证
         try {
             const res = await http.post('/api/v1/login', { username, password });
             console.log('res', res);
 
             // 判断是否登录成功
-            if (res.status === 'ok') {
+            if (res.status === 'success') {
                 // 存储token, 跳转页面
                 localStorage.setItem('token', res.data.token);
-                router.push('/dashbord');
+                router.push('/articles');
             } else {
                 // 登录失败
                 alert(res.msg);
